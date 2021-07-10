@@ -8,11 +8,12 @@ import datetime
 
 
 class VkRequest:
-    def __init__(self, login, password, domain: str, words: Union[list, set], notification_id):
+    def __init__(self, login, password, domain: str, words: Union[list, set], notification_id, delay):
         self.login = login
         self.password = password
         self.domain = domain
         self.words = words
+        self.delay = delay
         self.notification_id = notification_id
         self.messages = MessagesAPI(login=LOGIN, password=PASSWORD, two_factor=False, cookies_save_path='sessions/')
         self.vk_session = vk_api.VkApi(LOGIN, PASSWORD)
@@ -69,7 +70,7 @@ class VkRequest:
 
     def start_bot(self):
         while True:
-            sleep(900)
+            sleep(self.delay)
             self.update_data()
             print(f'Получены новые данные в {datetime.datetime.now().strftime("<%d-%m-%Y %H:%M:%S> ")}')
             self.check_words()
@@ -77,5 +78,5 @@ class VkRequest:
 
 words_list = ['Нервы', 'Джизус', 'Пошлая Молли']
 
-vkr = VkRequest(login=LOGIN, password=PASSWORD, domain='vdksell', words=words_list, notification_id=SEND_ID)
+vkr = VkRequest(login=LOGIN, password=PASSWORD, domain='vdksell', words=words_list, notification_id=SEND_ID, delay=900)
 vkr.start_bot()
