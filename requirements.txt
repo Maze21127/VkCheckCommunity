@@ -1,0 +1,4 @@
+vk_messages==0.2
+vk_api==11.9.4
+cx_Freeze==6.7
+python-dotenv==0.18.0
